@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import date
-from db import execute
+from views.dashboard_view import Dashboard
 
 class PedidoForm(tk.Toplevel):
     def __init__(self, master=None):

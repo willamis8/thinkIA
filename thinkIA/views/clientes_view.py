@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import re
-from db import execute
+from ..db import execute
+
 
 class ClienteForm(tk.Toplevel):
     def __init__(self, master=None, cliente=None, on_save=None):
