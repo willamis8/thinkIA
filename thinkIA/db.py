@@ -1,7 +1,7 @@
 # db.py
 import sqlite3
 import logging
- 
+
 DB_NAME = "app.db"
 
 def get_connection():

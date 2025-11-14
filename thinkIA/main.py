@@ -1,43 +1,28 @@
+# main.py
 import tkinter as tk
-from tkinter import ttk, messagebox
-import logging
-import os
-
-# Imports dos outros módulos do projeto
-from views.dashboard_view import Dashboard
+from db import init_db
 from views.clientes_view import ListaClientes
 from views.pedidos_view import PedidoForm
-from views.relatorios_view import Relatorios
+from utils import setup_logging
 
-from .db_init import init_db
-from .db import execute
-from .views.relatorios_view import Relatorios
+def main():
+    setup_logging()
+    init_db()
 
-  # Certifique-se de ter o arquivo db_init.py
+    root = tk.Tk()
+    root.title("Gerenciador de Clientes e Pedidos")
+    root.geometry("800x500")
 
-# Configuração do log
-if not os.path.exists("logs"):
-    os.makedirs("logs")
-logging.basicConfig(filename="logs/app.log", level=logging.INFO, format="%(asctime)s - %(message)s")
+    menu = tk.Menu(root)
+    root.config(menu=menu)
 
-# Inicializa banco de dados
-init_db()
+    cadastro = tk.Menu(menu, tearoff=0)
+    cadastro.add_command(label="Clientes", command=lambda: ListaClientes(root))
+    cadastro.add_command(label="Novo Pedido", command=lambda: PedidoForm(root))
+    menu.add_cascade(label="Cadastros", menu=cadastro)
 
-class MainApp(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Sistema ThinkIA")
-        self.geometry("800x600")
+    tk.Label(root, text="Bem-vindo ao sistema de Clientes e Pedidos", font=("Arial", 14)).pack(pady=50)
+    root.mainloop()
 
-        self.create_menu()
-        self.show_dashboard()
-
-    def create_menu(self):
-        menubar = tk.Menu(self)
-
-        menu_clientes = tk.Menu(menubar, tearoff=0)
-        menu_clientes.add_command(label="Listar Clientes", command=self.show_clientes)
-        menubar.add_cascade(label="Clientes", menu=menu_clientes)
-
-        menu_pedidos = tk.Menu(menubar, tearoff=0)
-        menu_pedidos.add_
+if __name__ == "__main__":
+    main()
